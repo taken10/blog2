@@ -1,0 +1,13 @@
+Comcast is expanding its LoRaWAN-based enterprise IoT service, which it calls machineQ, to 12 U.S. markets.
+（Comcastは、machineQと呼ばれるLoRaWANベースのエンタープライズIoTサービスを米国の12市場に展開しています。）
+   
+Comcast first announced machineQ service in October 2016 with trials in Philadelphia and San Francisco Bay Area,
+expanding to Chicago in November. Now it's rolling the service out in Atlanta, Baltimore, Boston, Denver, Detroit,
+Indianapolis, Miami, Minneapolis/St. Paul, Oakland, Pittsburgh, Seattle and Washington, D.C.
+　　
+We believe that Comcast has a unique opportunity to leverage our existing network assets and Semtech's LoRa technology,
+to fuel IoT innovation with disruptive new business models and smarter cities,
+said Alex Khorram, general manager of machineQ, in a release.
+
+We've seen excitement about a Comcast solution that is opening a whole new world of use cases that were previously
+not commercially viable due to the cost of connectivity and end devices, limited battery life and inability to get coverage.

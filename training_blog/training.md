@@ -16,15 +16,16 @@ Category: report
 * [1. 自己紹介](#1.)
  * [1.1. 経歴](#1.1.)
 * [2. 研修について](#2.)
+
  * [2.1. 研修内容](#2.1.)
  * [2.2. Spring](#2.2.)
-     * [2.2.1. XXXXX](#2.2.1.)
-     * [2.2.2. XXXXX](#2.2.2.)
+     * [2.2.1. Webアプリケーションの概要](#2.2.1.)
+     * [2.2.2. 使用したSpringのツールや機能](#2.2.2.)
  * [2.3. MyBatis](#2.3.)
      * [2.3.1. MyBatisとは](#2.3.1.)
      * [2.3.2. MyBatisの特徴](#2.3.2.)
      * [2.3.3. MyBatisの導入](#2.3.3.)
- * [2.4. その他](#2.4.)
+ * [2.4. セッション管理](#2.4.)
 * [3. まとめ](#3.)
 
 # <a name="overview"></a>
@@ -82,6 +83,8 @@ XXXXX<br>
 <br>
 # <a name="2.2."></a>
 ### 2.2. Spring
+# <a name="2.2.1."></a>
+#### 2.2.1. Webアプリケーションの概要<br>
 **「Springフレームワーク」**を使用して掲示板サイトを作成しました。<br>
 
 以下作成した課題の概要です。<br><br>
@@ -110,16 +113,61 @@ XXXXX<br>
 ②blacklistテーブル - ブラックリストに登録されたユーザーのデータ<br>
 ③threadsテーブル - 全スレッドのデータ<br>
 ④messageデータ - 全メッセージ（投稿）のデータ<br><br>
+<img src="img/db.jpg"><br>
 
-#### 2.2.1. 使用したSpringのツールや機能<br>
+# <a name="2.2.2."></a>
+#### 2.2.2. 使用したSpringのツールや機能<br>
+
+・STSを使用したプロジェクト作成<br>
+今回はeclipseのSpringに特化した開発ツールである「Spring Tool Suite(STS)」を使用して作成しました。<br><br>
+・STSでのプロジェクト作成<br>
+まず新規にプロジェクトを作成します。<br>
+新規→Springスターター・プロジェクト<br>
+<img src="img/newfile.jpg"><br>
 
 
+・Thymeleaf<br>
+次に**「Thymeleaf<sup>[1](#note1)</sup>」**というテンプレートエンジンを使用するためにMavenのライブラリ管理ファイルである**「pom.xml」**の<dependencies\>タグ内に下記の記述を追加します。<br>
 
+
+<sup><a name="note1">1</a></sup>
+XML/XHTML/HTML5で書かれたテンプレートを変換して、アプリケーションのデータやテキストを表示することができる。Thymeleaf用のタグを使用することでWebサーバから受け取ったデータを埋め込んだり、事前定義された処理を追加して動的なページが作成できる。
+<img src="img/thymeleaf_pom.jpg"><br>
+<br><br>
+そしてhtmlファイルを以下のように配置します。<br>
+<img src="img/htmllist.JPG"><br>
+
+実装したコードは以下になります。
+<br><br>
+
+**<message.html>**<br>
+<img src="img/message_thymeleaf.jpg"><br><br>
+>・上記コードの処理説明<br>
+**th:each、th:textタグ**を使用することでJava側から渡された値をページに表示させることができる。（選択したスレッドのメッセージ、投稿者等を表示することができる）<br><br>
+
+**<threadlist.html>**<br>
+<img src="img/thread_thymeleaf.jpg"><br><br>
+>・上記コードの処理説明<br>
+**th:ifタグ**を使用することで管理者か否かを条件分岐としてth:ifタグ以下の部分(spanタグに囲まれた部分)の表示・非表示を切り替えられる。
+<br><br>
+
+・MVC
 <br>
-<br>
-<br>
+MVCはModel / View / Controllerを表しておりアプリケーションソフトウェアを実装するためのデザインパターンになります。<br>
+それぞれ役割分担することで、アプリケーション開発を効率的に行うことができ、各プログラムの独立性が高くなることで仕様変更にも柔軟に対応できます。<br>
+<MVCの役割><br>
+>**model**: アプリケーションのデータを扱う<br>
+**view**: クライアントからの入力やクライアントへの出力を担う<br>
+&emsp;&emsp;&emsp;(今回は上記項目のThymeleafがViewにあたります)<br>
+**controller**: クライアントからの入力を受け取りmodelとviewへ指示する<br><br>
 
+また、今回作成する上で上記以外に「service」と「repository」という役割のクラスを追加しています。
+>**service**: ビジネスロジックを実行するためのメソッドを実装。<br>
+**repository**: データベースを操作するためのメソッドを実装。<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;(今回は下記項目のMyBatisがrepositoryにあたります)<br>
 
+図で表すとこのようになります。
+<img src="img/mvc.jpg"><br>
 
 # <a name="2.3."></a>
 ### 2.3. MyBatis
@@ -197,8 +245,29 @@ MyBatisの処理を実装するために下記のクラス、ファイルを作�
 <img src="img/Mapper_foreach.jpg"><br>
 >・上記コードの処理説明<br>
 「MessageMapper.xml」のselect文内の**foreachタグ**を使用することでList型の値をに入っている値を条件として使用することができる。
+<br><br>
+
+# <a name="2.4."></a>
+### 2.4. セッション管理
+非機能としてセッション管理を実装しました。<br>
+ログインを行っていないユーザー（セッションIDを取得していないユーザー）がログイン画面以外にアクセスした場合、強制的にログイン画面に遷移します。<br>
+またこの処理を実装するにあたり「AOP(アスペクト指向プログラミング)<sup>[1](#note3)</sup>」を使用しました。<br><br>
+<sup><a name="note3">1</a></sup>
+「本来のプログラムの処理（掲示板の機能）」とは別に「動きを記録するロギング操作」などの共通処理をモジュール化し分離することで、把握・管理・変更を容易にする。<br>
+そしてモジュール化した操作をメソッドの前後で任意に実行させることができる。
+<br><br>
+掲示板サイトに実装したコードは以下になります。<br>
+**<LoginInterceptor.java>**<br>
+<img src="img/aop_class.jpg"><br><br>
+**<LoginInterceptorConfig.java>**<br>
+<img src="img/aop_config.jpg"><br>
+>・上記コードの処理説明<br>
+「LoginInterceptor.java」でクラス名を「preHandle」とすることでcontrollerメソッドの実行前に共通処理を実行することができる。セッションを取得していない場合ログイン画面に遷移する処理を記述。<br>
+「LoginInterceptorConfig.java」では処理する対象と除外する対象を設定している。
+<br><br>
 
 ---
+
 # <a name="3."></a>
 ## 3. まとめ
 研修ではまず最初にそれぞれのスキルレベルや経験に合わせてカリキュラムが組まれるのが良かったです。<br>

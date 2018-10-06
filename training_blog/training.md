@@ -101,7 +101,7 @@ XXXXX<br>
 ・セッション管理<br>
 
 ▶画面遷移図
-<img src="img/display.jpg">
+![画面遷移図](./img/display.JPG)
 <br><br>
 
 
@@ -113,7 +113,7 @@ XXXXX<br>
 ②blacklistテーブル - ブラックリストに登録されたユーザーのデータ<br>
 ③threadsテーブル - 全スレッドのデータ<br>
 ④messageデータ - 全メッセージ（投稿）のデータ<br><br>
-<img src="img/db.jpg"><br>
+![データ定義](./img/db.JPG)<br>
 
 # <a name="2.2.2."></a>
 #### 2.2.2. 使用したSpringのツールや機能<br>
@@ -123,7 +123,7 @@ XXXXX<br>
 ・STSでのプロジェクト作成<br>
 まず新規にプロジェクトを作成します。<br>
 新規→Springスターター・プロジェクト<br>
-<img src="img/newfile.jpg"><br>
+![プロジェクト作成](./img/newfile.JPG)<br>
 
 
 ・Thymeleaf<br>
@@ -132,21 +132,21 @@ XXXXX<br>
 
 <sup><a name="note1">1</a></sup>
 XML/XHTML/HTML5で書かれたテンプレートを変換して、アプリケーションのデータやテキストを表示することができる。Thymeleaf用のタグを使用することでWebサーバから受け取ったデータを埋め込んだり、事前定義された処理を追加して動的なページが作成できる。
-<img src="img/thymeleaf_pom.jpg"><br>
+![thymeleaf_pom](./img/thymeleaf_pom.JPG)<br>
 <br><br>
 そしてhtmlファイルを以下のように配置します。<br>
-<img src="img/htmllist.JPG"><br>
+![htmllist](./img/htmllist.JPG)<br>
 
 実装したコードは以下になります。
 <br><br>
 
 **<message.html>**<br>
-<img src="img/message_thymeleaf.jpg"><br><br>
+![message_thymeleaf](./img/message_thymeleaf.JPG)<br><br>
 >・上記コードの処理説明<br>
 **th:each、th:textタグ**を使用することでJava側から渡された値をページに表示させることができる。（選択したスレッドのメッセージ、投稿者等を表示することができる）<br><br>
 
 **<threadlist.html>**<br>
-<img src="img/thread_thymeleaf.jpg"><br><br>
+![thread_thymeleaf](./img/thread_thymeleaf.JPG)<br><br>
 >・上記コードの処理説明<br>
 **th:ifタグ**を使用することで管理者か否かを条件分岐としてth:ifタグ以下の部分(spanタグに囲まれた部分)の表示・非表示を切り替えられる。
 <br><br>
@@ -167,7 +167,7 @@ MVCはModel / View / Controllerを表しておりアプリケーションソフ�
 &emsp;&emsp;&emsp;&emsp;&emsp;(今回は下記項目のMyBatisがrepositoryにあたります)<br>
 
 図で表すとこのようになります。
-<img src="img/mvc.jpg"><br>
+![mvc](./img/mvc.JPG)<br>
 
 # <a name="2.3."></a>
 ### 2.3. MyBatis
@@ -212,12 +212,12 @@ SQLに合わせた、DTOを都度作成する必要がなくなる。
 今回その機能を実際に使用するまでの流れと実際の処理内容をご紹介します。
 
 まずSpringBootの設定ファイルである**「application.properties」**ファイルにDataBaseアクセスのための情報を記述します。(MySQLを使用する場合)
-<img src="img/MyBatis_properties.jpg">
+![MyBatis_properties](./img/MyBatis_properties.JPG)
 <br><br>
 
 次にMyBatisを使用するためにMavenのライブラリ管理ファイルである**「pom.xml」**の<dependencies\>タグ内に下記の記述を追加します。<br>
 (versionは環境によって異なる場合があります)
-<img src="img/MyBatis_pom.jpg">
+![MyBatis_pom](./img/MyBatis_pom.JPG)
 <br><br>
 これで接続のための準備は完了したので次は実際の処理を作成していきます。
 <br><br>
@@ -225,24 +225,24 @@ MyBatisの処理を実装するために下記のクラス、ファイルを作�
 ①SQL処理を呼び出すMapperインターフェースクラス<br>
 ②SQL文を記述するXMLファイル<br><br>
 2つのファイルを以下のようにMapperフォルダ内に配置します。<br>
-<img src="img/mapperlist.jpg">
+![mapperlist](./img/mapperlist.JPG)
 
 
 掲示板サイトに実装したコードは以下になります。
 <br><br>
 
 **<UserMapper.java>**<br>
-<img src="img/Mapper_if_java.jpg"><br><br>
+![Mapper_if_java](./img/Mapper_if_java.JPG)<br><br>
 **<UserMapper.xml>**<br>
-<img src="img/Mapper_if.jpg"><br>
+![Mapper_if](./img/Mapper_if.JPG)<br>
 >・上記コードの処理説明<br>
 「UserMapper.xml」のselect文内の**ifタグ(if testの部分)**を使用することで動的SQLが可能になり、<br>
 パスワードの値(pass)が入っていれば検索条件を追加が可能。<br><br><br>
 
 **<MessageMapper.java>**<br>
-<img src="img/Mapper_foreach_java.jpg"><br><br>
+![./img/Mapper_foreach_java](./img/Mapper_foreach_java.JPG)<br><br>
 **<MessageMapper.xml>**<br>
-<img src="img/Mapper_foreach.jpg"><br>
+![Mapper_foreach](./img/Mapper_foreach.JPG)<br>
 >・上記コードの処理説明<br>
 「MessageMapper.xml」のselect文内の**foreachタグ**を使用することでList型の値をに入っている値を条件として使用することができる。
 <br><br>
@@ -258,9 +258,9 @@ MyBatisの処理を実装するために下記のクラス、ファイルを作�
 <br><br>
 掲示板サイトに実装したコードは以下になります。<br>
 **<LoginInterceptor.java>**<br>
-<img src="img/aop_class.jpg"><br><br>
+![aop_class](./img/aop_class.JPG)<br><br>
 **<LoginInterceptorConfig.java>**<br>
-<img src="img/aop_config.jpg"><br>
+![aop_config](./img/aop_config.JPG)<br>
 >・上記コードの処理説明<br>
 「LoginInterceptor.java」でクラス名を「preHandle」とすることでcontrollerメソッドの実行前に共通処理を実行することができる。セッションを取得していない場合ログイン画面に遷移する処理を記述。<br>
 「LoginInterceptorConfig.java」では処理する対象と除外する対象を設定している。
